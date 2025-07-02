@@ -1,5 +1,7 @@
-use sqlx::{postgres::PgPoolOptions, Pool, Postgres};
+use sqlx::{Pool, Postgres, postgres::PgPoolOptions};
 use std::time::Duration;
+
+pub mod repository;
 
 pub type DbPool = Pool<Postgres>;
 
@@ -12,8 +14,6 @@ pub async fn create_pool(database_url: &str) -> Result<DbPool, sqlx::Error> {
 }
 
 pub async fn run_migrations(pool: &DbPool) -> Result<(), sqlx::Error> {
-    sqlx::migrate!("./migrations")
-        .run(pool)
-        .await?;
+    sqlx::migrate!("./migrations").run(pool).await?;
     Ok(())
 }

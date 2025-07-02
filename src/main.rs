@@ -11,7 +11,7 @@ use tower_http::cors::CorsLayer;
 mod db;
 mod handlers;
 mod models;
-// mod collectors;
+mod collectors;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()>{
@@ -39,7 +39,7 @@ async fn main() -> anyhow::Result<()>{
     // run the server
     let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
     let listener = TcpListener::bind(addr).await?;
-    
+
     tracing::info!("Server listening on {}", addr);
 
     axum::serve(listener, app).await?;
